@@ -1,0 +1,58 @@
+﻿@page
+@model CheckFiles.Pages.IndexModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste Togglable</title>
+    <style>
+        ul {
+            list-style-type: none;
+        }
+
+        li {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .sublist {
+            display: none;
+            margin-left: 20px;
+        }
+    </style>
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+            var listItems = document.querySelectorAll("#myList li");
+
+            listItems.forEach(function (item) {
+                item.addEventListener("click", function () {
+                    var sublist = item.querySelector("ul.sublist");
+                    if (sublist) {
+                        sublist.style.display = sublist.style.display === "none" ? "block" : "none";
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Liste Togglable</h1>
+    <ul id="myList">
+        @foreach (var directory in Model.Directories)
+        {
+            <li>
+                @directory.Name
+                @if (directory.Subdirectories.Count > 0)
+                {
+                    <ul class="sublist">
+                        @foreach (var subdirectory in directory.Subdirectories)
+                        {
+                            <li>@subdirectory.Name</li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+</body>
+</
